@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.21.1",
-    "jest": "^27.5.1"
+    "axios": "^0.21.4",
+    "jest": "*"
   },
   "scripts": {
     "pretest": "rimraf pacts",
@@ -14,12 +14,12 @@
     "deploy": "pact-broker record-deployment --pacticipant pactflow-example-bi-directional-consumer-mountebank --version \"$(npx @pact-foundation/absolute-version)\" --environment production"
   },
   "devDependencies": {
-    "@anev/ts-mountebank": "^1.4.1",
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "@pact-foundation/pact-core": "^13.4.1-beta.18",
-    "mkdirp": "^1.0.4",
-    "mountebank": "^2.6.0",
-    "wait-port": "^0.2.9"
+    "@anev/ts-mountebank": "*",
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "@pact-foundation/pact-core": "*",
+    "mkdirp": "*",
+    "mountebank": "*",
+    "wait-port": "*"
   }
 }
