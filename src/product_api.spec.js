@@ -9,20 +9,24 @@ import {
   Mountebank,
   Stub,
   EqualPredicate,
+  FlexiPredicate,
+  Operator,
   HttpMethod,
   NotFoundResponse,
 } from "@anev/ts-mountebank";
 
-describe("API Contract Test", () => {
-  const mb = new Mountebank();
-  const api = new ProductAPIClient(`http://localhost:${imposterPort}`);
-  const imposter = new Imposter()
-    .withPort(imposterPort)
-    .withRecordRequests(true);
+const mb = new Mountebank();
+const imposter = new Imposter()
+  .withPort(imposterPort)
+  .withRecordRequests(true);
 
-  beforeAll(() => startAndClearStubs());
-  afterEach(() => writeStubs(mb, imposterPort));
-  afterAll(() => stopStubs());
+beforeAll(() => startAndClearStubs());
+afterEach(() => writeStubs(mb, imposterPort));
+afterAll(() => stopStubs());
+
+describe("Product API Contract Tests", () => {
+  const productApi = new ProductAPIClient(`http://localhost:${imposterPort}`);
+
 
   const expectedProduct = {
     id: "10",
@@ -39,7 +43,7 @@ describe("API Contract Test", () => {
             .withPredicate(
               new EqualPredicate()
                 .withMethod(HttpMethod.GET)
-                .withPath("/products")
+                .withPath("/products/products")
             )
             .withResponse(
               new Response().withStatusCode(200).withJSONBody([expectedProduct])
@@ -48,7 +52,7 @@ describe("API Contract Test", () => {
       await mb.createImposter(imposter);
 
       // make request to Pact mock server
-      const products = await api.getAllProducts();
+      const products = await productApi.getAllProducts();
 
       // assert that we got the expected response
       expect(products).toStrictEqual([new Product(expectedProduct)]);
@@ -64,7 +68,7 @@ describe("API Contract Test", () => {
             .withPredicate(
               new EqualPredicate()
                 .withMethod(HttpMethod.GET)
-                .withPath("/product/10")
+                .withPath("/products/product/10")
             )
             .withResponse(
               new Response().withStatusCode(200).withJSONBody(expectedProduct)
@@ -74,10 +78,9 @@ describe("API Contract Test", () => {
 
       await mb.createImposter(imposter);
     });
-
     test("ID 10 exists", async () => {
       // Act
-      const product = await api.getProduct("10");
+      const product = await productApi.getProduct("10");
 
       // Assert - did we get the expected response
       expect(product).toStrictEqual(new Product(expectedProduct));
@@ -85,9 +88,12 @@ describe("API Contract Test", () => {
 
     test("product does not exist", async () => {
       // Act + Assert
-      await expect(api.getProduct("11")).rejects.toThrow(
+      await expect(productApi.getProduct("11")).rejects.toThrow(
         "Request failed with status code 404"
       );
     });
   });
 });
+
+
+
