@@ -54,6 +54,8 @@ describe("LotDetails API Contract Tests", () => {
     }
   };
 
+  
+
   describe("Retrieving details for a lot", () => {
     beforeAll(async () => {
     //   imposter
