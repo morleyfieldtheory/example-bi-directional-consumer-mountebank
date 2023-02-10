@@ -44,9 +44,9 @@ describe("LotDetails API Contract Tests", () => {
               "template_loc": {"down": 5, "right": 1, "value": "right"}},
           "lot_purified_date": {"key":"Purification Date", "value": "2022 Mar 07 09:00 PDT", "type": "date",
               "template_loc": {"down": 6, "right": 0, "value": "right"}},
-          "lot_purity":  {"key":"Purity (%)", "value": "92", "type": "percent",
+          "lot_purity":  {"key":"Purity (%)", "value": 92, "type": "percent",
               "template_loc": {"down": 7, "right": 1, "value": "right"}},
-          "lot_amount_produced":  {"key":"Amount Produced (mg)", "value": "22", "type": "number",
+          "lot_amount_produced":  {"key":"Amount Produced (mg)", "value": 22, "type": "number",
               "template_loc": {"down": 8, "right": 1, "value": "right"}},
           "lot_eln_record":  {"key":"ELN Record", "value": "[Lot MFT-000123-001 Production Production](http://eln.com/eln12355)", "type": "url",
               "template_loc": {"down": 9, "right": 0, "value": "right"}}
@@ -54,7 +54,7 @@ describe("LotDetails API Contract Tests", () => {
     }
   };
 
-  
+
 
   describe("Retrieving details for a lot", () => {
     beforeAll(async () => {
